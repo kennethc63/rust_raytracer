@@ -2,18 +2,18 @@
 use std::io::Write;
 
 pub struct Colour {
-    r : f64,
-    g : f64,
-    b : f64
+    r: f64,
+    g: f64,
+    b: f64,
 }
 
 impl Colour {
-    pub fn new(r : f64, g : f64, b : f64) -> Colour {
-        Colour {r, g, b}
+    pub fn new(r: f64, g: f64, b: f64) -> Colour {
+        Colour { r, g, b }
     }
 }
 
-pub fn write_colour(out : &mut impl Write, pixel_colour : Colour) {
+pub fn write_colour(out: &mut impl Write, pixel_colour: Colour) {
     let rbyte = (255.99 * pixel_colour.r) as usize;
     let gbyte = (255.99 * pixel_colour.g) as usize;
     let bbyte = (255.99 * pixel_colour.b) as usize;
