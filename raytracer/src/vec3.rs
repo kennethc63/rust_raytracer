@@ -1,6 +1,6 @@
 //vec3.rs
 
-use std::ops::{Add, Mul};
+use std::ops::{Add, Div, Mul, Sub};
 
 //Allow printing and cloning, Clone enables explicit .clone(), Copy = implicit copying when needed
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -17,6 +17,15 @@ impl Vec3 {
     pub fn zero() -> Vec3 {
         Vec3::new(0.0, 0.0, 0.0)
     }
+    pub fn length(&self) -> f64 {
+        self.length_squared().sqrt()
+    }
+    pub fn length_squared(&self) -> f64 {
+        self.x * self.x + self.y * self.y + self.z * self.z
+    }
+    pub fn unit_vector(&self) -> Vec3 {
+        *self / self.length()
+    }
 }
 
 impl Add for Vec3 {
@@ -30,6 +39,20 @@ impl Mul<Vec3> for f64 {
     type Output = Vec3;
     fn mul(self, other: Vec3) -> Vec3 {
         Vec3::new(self * other.x, self * other.y, self * other.z)
+    }
+}
+
+impl Sub for Vec3 {
+    type Output = Vec3;
+    fn sub(self, other: Vec3) -> Vec3 {
+        Vec3::new(self.x - other.x, self.y - other.y, self.z - other.z)
+    }
+}
+
+impl Div<f64> for Vec3 {
+    type Output = Vec3;
+    fn div(self, other: f64) -> Vec3 {
+        Vec3::new(self.x / other, self.y / other, self.z / other)
     }
 }
 
