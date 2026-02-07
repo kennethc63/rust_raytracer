@@ -23,9 +23,13 @@ impl Vec3 {
     pub fn length_squared(&self) -> f64 {
         self.x * self.x + self.y * self.y + self.z * self.z
     }
-    pub fn unit_vector(&self) -> Vec3 {
-        *self / self.length()
+    pub fn unit_vector(self) -> Vec3 {
+        self / self.length()
     }
+}
+
+pub fn dot(a: Vec3, b: Vec3) -> f64 {
+    a.x * b.x + a.y * b.y + a.z * b.z
 }
 
 impl Add for Vec3 {

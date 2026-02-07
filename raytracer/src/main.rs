@@ -7,11 +7,23 @@ mod vec3;
 use crate::{
     colour::*,
     ray::Ray,
-    vec3::{Point3, Vec3},
+    vec3::{Point3, Vec3, dot},
 };
 use std::io::stdout;
 
-fn ray_colour(ray: Ray) -> Colour {
+fn hit_sphere(centre: Point3, radius: f64, r: &Ray) -> bool {
+    let oc = centre - r.origin;
+    let a = dot(r.direction, r.direction);
+    let b = -2.0 * dot(r.direction, oc);
+    let c = dot(oc, oc) - radius * radius;
+    let discriminant = b * b - 4.0 * a * c;
+    discriminant >= 0.0
+}
+
+fn ray_colour(ray: &Ray) -> Colour {
+    if hit_sphere(Point3::new(0.0, 0.0, -1.0), 0.5, ray) {
+        return Colour::new(1.0, 0.0, 0.0);
+    }
     let unit_direction = ray.direction.unit_vector();
     let a = 0.5 * (unit_direction.y + 1.0);
     (1.0 - a) * Colour::new(1.0, 1.0, 1.0) + a * Colour::new(0.5, 0.7, 1.0)
@@ -53,7 +65,7 @@ fn main() {
                 pixel00_loc + (i as f64 * pixel_delta_u) + (j as f64 * pixel_delta_v);
             let ray_direction = pixel_centre - camera_centre;
             let r = Ray::new(camera_centre, ray_direction);
-            let pixel_colour = ray_colour(r);
+            let pixel_colour = ray_colour(&r);
 
             write_colour(&mut out, pixel_colour);
         }
