@@ -1,7 +1,7 @@
 //list modules that are part of the project - not an import closer to a makefile - only in main
 mod colour;
-mod vec3;
 mod ray;
+mod vec3;
 
 //Lets us use names locally
 use crate::colour::*;
