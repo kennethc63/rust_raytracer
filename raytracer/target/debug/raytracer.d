@@ -1,1 +1,0 @@
-/Users/kenneth/Documents/repos/rust_raytracer/raytracer/target/debug/raytracer: /Users/kenneth/Documents/repos/rust_raytracer/raytracer/src/colour.rs /Users/kenneth/Documents/repos/rust_raytracer/raytracer/src/main.rs /Users/kenneth/Documents/repos/rust_raytracer/raytracer/src/vec3.rs
