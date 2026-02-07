@@ -14,7 +14,7 @@ use std::io::stdout;
 fn ray_colour(ray: Ray) -> Colour {
     let unit_direction = ray.direction.unit_vector();
     let a = 0.5 * (unit_direction.y + 1.0);
-    (1.0 - a)*Colour::new(1.0, 1.0, 1.0) + a * Colour::new(0.5, 0.7, 1.0)
+    (1.0 - a) * Colour::new(1.0, 1.0, 1.0) + a * Colour::new(0.5, 0.7, 1.0)
 }
 
 fn main() {

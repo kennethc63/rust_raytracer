@@ -1,5 +1,8 @@
 //colour.rs
-use std::{io::Write, ops::{Add, Mul}};
+use std::{
+    io::Write,
+    ops::{Add, Mul},
+};
 
 pub struct Colour {
     pub r: f64,
@@ -26,7 +29,6 @@ impl Mul<Colour> for f64 {
         Colour::new(self * other.r, self * other.g, self * other.b)
     }
 }
-
 
 pub fn write_colour(out: &mut impl Write, pixel_colour: Colour) {
     let rbyte = (255.99 * pixel_colour.r) as usize;
