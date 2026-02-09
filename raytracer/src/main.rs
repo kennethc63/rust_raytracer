@@ -13,16 +13,15 @@ use std::io::stdout;
 
 fn hit_sphere(centre: Point3, radius: f64, r: &Ray) -> f64 {
     let oc = centre - r.origin;
-    let a = dot(r.direction, r.direction);
-    let b = -2.0 * dot(r.direction, oc);
-    let c = dot(oc, oc) - radius * radius;
-    let discriminant = b * b - 4.0 * a * c;
+    let a = r.direction.length_squared();
+    let h = dot(r.direction, oc);
+    let c = oc.length_squared() - radius * radius;
+    let discriminant = h * h - a * c;
 
     if discriminant < 0.0 {
         -1.0
-    }
-    else {
-        (-b - discriminant.sqrt()) / (2.0 * a)
+    } else {
+        (h - discriminant.sqrt()) / (2.0 * a)
     }
 }
 
@@ -30,7 +29,7 @@ fn ray_colour(ray: &Ray) -> Colour {
     let t = hit_sphere(Point3::new(0.0, 0.0, -1.0), 0.5, ray);
     if t > 0.0 {
         let N: Vec3 = (ray.at(t) - Vec3::new(0.0, 0.0, -1.0)).unit_vector();
-        return 0.5 * Colour::new(N.x+1.0, N.y+1.0, N.z+1.0);
+        return 0.5 * Colour::new(N.x + 1.0, N.y + 1.0, N.z + 1.0);
     }
     let unit_direction: Vec3 = ray.direction.unit_vector();
     let a = 0.5 * (unit_direction.y + 1.0);
