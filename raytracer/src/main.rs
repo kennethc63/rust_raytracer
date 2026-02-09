@@ -1,6 +1,7 @@
 //list modules that are part of the project - not an import closer to a makefile - only in main
 mod colour;
 mod hittable;
+mod hittable_list;
 mod ray;
 mod sphere;
 mod vec3;
