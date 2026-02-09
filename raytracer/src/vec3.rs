@@ -1,6 +1,6 @@
 //vec3.rs
 
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 //Allow printing and cloning, Clone enables explicit .clone(), Copy = implicit copying when needed
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -57,6 +57,13 @@ impl Div<f64> for Vec3 {
     type Output = Vec3;
     fn div(self, other: f64) -> Vec3 {
         Vec3::new(self.x / other, self.y / other, self.z / other)
+    }
+}
+
+impl Neg for Vec3 {
+    type Output = Vec3;
+    fn neg(self) -> Vec3 {
+        Vec3::new(-self.x, -self.y, -self.z)
     }
 }
 
