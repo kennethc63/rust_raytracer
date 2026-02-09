@@ -21,7 +21,7 @@ fn hit_sphere(centre: Point3, radius: f64, r: &Ray) -> f64 {
     if discriminant < 0.0 {
         -1.0
     } else {
-        (h - discriminant.sqrt()) / (2.0 * a)
+        (h - discriminant.sqrt()) / a
     }
 }
 
