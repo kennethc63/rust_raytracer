@@ -71,7 +71,6 @@ mod tests {
     #[test]
     fn test_add() {
         //need to include outer evironment
-        use super::*;
         let v1 = Vec3::new(1.0, 2.0, 3.0);
         let v2 = Vec3::new(4.0, 5.0, 6.0);
         assert_eq!(v1 + v2, Vec3::new(5.0, 7.0, 9.0));
@@ -80,7 +79,6 @@ mod tests {
     #[test]
     fn test_mul() {
         //need to include outer evironment
-        use super::*;
         let v1 = Vec3::new(1.0, 2.0, 3.0);
         assert_eq!(10.0 * v1, Vec3::new(10.0, 20.0, 30.0));
     }
