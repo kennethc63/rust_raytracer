@@ -1,6 +1,8 @@
 //list modules that are part of the project - not an import closer to a makefile - only in main
 mod colour;
+mod hittable;
 mod ray;
+mod sphere;
 mod vec3;
 
 //Lets us use names locally
