@@ -2,6 +2,7 @@
 mod colour;
 mod hittable;
 mod hittable_list;
+mod interval;
 mod ray;
 mod sphere;
 mod vec3;
@@ -11,6 +12,7 @@ use crate::{
     colour::*,
     hittable::Hittable,
     hittable_list::HittableList,
+    interval::Interval,
     ray::Ray,
     sphere::Sphere,
     vec3::{Point3, Vec3, dot},
@@ -18,9 +20,8 @@ use crate::{
 use std::io::stdout;
 
 fn ray_colour(r: &Ray, world: &impl Hittable) -> Colour {
-    if let Some(rec) = world.hit(r, 0.0, f64::INFINITY) {
-        return 0.5
-            * (Colour::from(rec.normal) + Colour::new(1.0, 1.0, 1.0));
+    if let Some(rec) = world.hit(r, Interval::new(0.0, f64::INFINITY)) {
+        return 0.5 * (Colour::from(rec.normal) + Colour::new(1.0, 1.0, 1.0));
     }
     let unit_direction: Vec3 = r.direction.unit_vector();
     let a = 0.5 * (unit_direction.y + 1.0);
