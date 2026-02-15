@@ -9,23 +9,22 @@ use crate::{
 //Box is a memory pointer to the heap
 //we are storing a list of pointers to the objects
 //hittable list owns all the objects so when it gets destroyed the objects all also get destroyed
-pub struct HittableList {
-    objects: Vec<Box<dyn Hittable>>,
+pub struct HittableList<'a> {
+    objects: Vec<Box<dyn Hittable + 'a>>, //object has no components with shorter lifetime
 }
 
-impl HittableList {
-    pub fn new() -> HittableList {
+impl<'a> HittableList<'a> {
+    pub fn new() -> HittableList<'a> {
         HittableList {
             objects: Vec::new(),
         }
     }
-    pub fn add(&mut self, object: impl Hittable + 'static) {
-        //what is static?
+    pub fn add(&mut self, object: impl Hittable + 'a) {
         self.objects.push(Box::new(object))
     }
 }
 
-impl Hittable for HittableList {
+impl<'a> Hittable for HittableList<'a> {
     fn hit(&self, r: &Ray, ray_tmin: f64, ray_tmax: f64) -> Option<HitRecord> {
         let mut rec = None;
         let mut closest_so_far = ray_tmax;

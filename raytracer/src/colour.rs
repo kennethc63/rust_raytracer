@@ -4,6 +4,8 @@ use std::{
     ops::{Add, Mul},
 };
 
+use crate::vec3::Vec3;
+
 pub struct Colour {
     pub r: f64,
     pub g: f64,
@@ -13,6 +15,13 @@ pub struct Colour {
 impl Colour {
     pub fn new(r: f64, g: f64, b: f64) -> Colour {
         Colour { r, g, b }
+    }
+}
+
+//Conversion from vec3 to Colour
+impl From<Vec3> for Colour {
+    fn from(v: Vec3) -> Colour {
+        Colour::new(v.x, v.y, v.z)
     }
 }
 

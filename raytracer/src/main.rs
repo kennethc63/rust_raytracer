@@ -20,7 +20,7 @@ use std::io::stdout;
 fn ray_colour(r: &Ray, world: &impl Hittable) -> Colour {
     if let Some(rec) = world.hit(r, 0.0, f64::INFINITY) {
         return 0.5
-            * (Colour::new(rec.normal.x, rec.normal.y, rec.normal.z) + Colour::new(1.0, 1.0, 1.0));
+            * (Colour::from(rec.normal) + Colour::new(1.0, 1.0, 1.0));
     }
     let unit_direction: Vec3 = r.direction.unit_vector();
     let a = 0.5 * (unit_direction.y + 1.0);
