@@ -7,6 +7,7 @@ mod interval;
 mod ray;
 mod sphere;
 mod vec3;
+mod util;
 
 //Lets us use names locally
 use crate::{
