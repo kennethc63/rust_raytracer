@@ -109,7 +109,7 @@ impl Camera {
 
         if let Some(rec) = world.hit(r, Interval::new(0.001, f64::INFINITY)) {
             let direction = rec.normal + Vec3::random_unit_vector();
-            return 0.1 * self.ray_colour(&Ray::new(rec.p, direction), depth - 1, world); //The first decimal is percentage reflectance
+            return 0.5 * self.ray_colour(&Ray::new(rec.p, direction), depth - 1, world); //The first decimal is percentage reflectance
         }
         let unit_direction: Vec3 = r.direction.unit_vector();
         let a = 0.5 * (unit_direction.y + 1.0);

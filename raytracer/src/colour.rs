@@ -49,10 +49,22 @@ impl AddAssign for Colour {
 
 const intensity: Interval = Interval::new(0.0, 0.999);
 
+fn linear_to_gamma(linear_component: f64) -> f64 {
+    if linear_component > 0.0 {
+        linear_component.sqrt()
+    } else {
+        0.0
+    }
+}
+
 pub fn write_colour(out: &mut impl Write, pixel_colour: Colour) {
-    let rbyte = (256.0 * intensity.clamp(pixel_colour.r)) as usize;
-    let gbyte = (256.0 * intensity.clamp(pixel_colour.g)) as usize;
-    let bbyte = (256.0 * intensity.clamp(pixel_colour.b)) as usize;
+    let r = linear_to_gamma(pixel_colour.r);
+    let g = linear_to_gamma(pixel_colour.g);
+    let b = linear_to_gamma(pixel_colour.b);
+
+    let rbyte = (256.0 * intensity.clamp(r)) as usize;
+    let gbyte = (256.0 * intensity.clamp(g)) as usize;
+    let bbyte = (256.0 * intensity.clamp(b)) as usize;
 
     //Could return an error
     writeln!(out, "{rbyte} {gbyte} {bbyte}").unwrap(); // assume it works, panic otherwise
