@@ -4,7 +4,7 @@ use std::{
     ops::{Add, Mul},
 };
 
-use crate::vec3::Vec3;
+use crate::{interval::Interval, vec3::Vec3};
 
 pub struct Colour {
     pub r: f64,
@@ -39,10 +39,12 @@ impl Mul<Colour> for f64 {
     }
 }
 
+const intensity: Interval = Interval::new(0.0, 0.999);
+
 pub fn write_colour(out: &mut impl Write, pixel_colour: Colour) {
-    let rbyte = (255.99 * pixel_colour.r) as usize;
-    let gbyte = (255.99 * pixel_colour.g) as usize;
-    let bbyte = (255.99 * pixel_colour.b) as usize;
+    let rbyte = (256.0 * intensity.clamp(pixel_colour.r)) as usize;
+    let gbyte = (256.0 * intensity.clamp(pixel_colour.g)) as usize;
+    let bbyte = (256.0 * intensity.clamp(pixel_colour.b)) as usize;
 
     //Could return an error
     writeln!(out, "{rbyte} {gbyte} {bbyte}").unwrap(); // assume it works, panic otherwise
