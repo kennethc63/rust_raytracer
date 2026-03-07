@@ -49,7 +49,7 @@ impl Camera {
         let mut out = stdout();
         println!("P3\n{} {}\n255", self.image_width, self.image_height);
         for j in 0..self.image_height {
-            eprint!("\rScanlines remaining: {}", self.image_height - j);
+            eprint!("\rScanlines remaining: {}     ", self.image_height - j);
             for i in 0..self.image_width {
                 let mut pixel_colour = Colour::new(0.0, 0.0, 0.0);
                 for sample in 0..self.samples_per_pixel {
@@ -108,8 +108,8 @@ impl Camera {
         }
 
         if let Some(rec) = world.hit(r, Interval::new(0.001, f64::INFINITY)) {
-            let direction = Vec3::random_on_hemisphere(rec.normal);
-            return 0.5 * self.ray_colour(&Ray::new(rec.p, direction), depth - 1, world);
+            let direction = rec.normal + Vec3::random_unit_vector();
+            return 0.1 * self.ray_colour(&Ray::new(rec.p, direction), depth - 1, world); //The first decimal is percentage reflectance
         }
         let unit_direction: Vec3 = r.direction.unit_vector();
         let a = 0.5 * (unit_direction.y + 1.0);
