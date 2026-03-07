@@ -6,8 +6,8 @@ mod hittable_list;
 mod interval;
 mod ray;
 mod sphere;
-mod vec3;
 mod util;
+mod vec3;
 
 //Lets us use names locally
 use crate::{
@@ -26,5 +26,6 @@ fn main() {
     let mut cam = Camera::new(); // ???
     cam.aspect_ratio = 16.0 / 9.0;
     cam.image_width = 400;
+    cam.samples_per_pixel = 100;
     cam.render(&world);
 }

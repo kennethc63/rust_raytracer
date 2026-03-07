@@ -1,7 +1,7 @@
 //colour.rs
 use std::{
     io::Write,
-    ops::{Add, Mul},
+    ops::{Add, AddAssign, Mul},
 };
 
 use crate::{interval::Interval, vec3::Vec3};
@@ -36,6 +36,14 @@ impl Mul<Colour> for f64 {
     type Output = Colour;
     fn mul(self, other: Colour) -> Colour {
         Colour::new(self * other.r, self * other.g, self * other.b)
+    }
+}
+
+impl AddAssign for Colour {
+    fn add_assign(&mut self, other: Colour) {
+        self.r += other.r;
+        self.g += other.g;
+        self.b += other.b;
     }
 }
 
