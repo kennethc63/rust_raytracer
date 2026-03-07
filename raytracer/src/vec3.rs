@@ -2,6 +2,8 @@
 
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
+use crate::util::{random_f64, random_f64_range};
+
 //Allow printing and cloning, Clone enables explicit .clone(), Copy = implicit copying when needed
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Vec3 {
@@ -17,6 +19,16 @@ impl Vec3 {
     pub fn zero() -> Vec3 {
         Vec3::new(0.0, 0.0, 0.0)
     }
+    pub fn random() -> Vec3 {
+        Vec3::new(random_f64(), random_f64(), random_f64())
+    }
+    pub fn random_range(min: f64, max: f64) -> Vec3 {
+        Vec3::new(
+            random_f64_range(min, max),
+            random_f64_range(min, max),
+            random_f64_range(min, max),
+        )
+    }
     pub fn length(&self) -> f64 {
         self.length_squared().sqrt()
     }
@@ -25,6 +37,23 @@ impl Vec3 {
     }
     pub fn unit_vector(self) -> Vec3 {
         self / self.length()
+    }
+    pub fn random_unit_vector() -> Vec3 {
+        loop {
+            let p = Vec3::random_range(-1.0, 1.0);
+            let lensq = p.length();
+            if 1e-160 < lensq && lensq <= 1.0 {
+                return p / lensq.sqrt();
+            }
+        }
+    }
+    pub fn random_on_hemisphere(normal: Vec3) -> Vec3 {
+        let on_unit_sphere = Vec3::random_unit_vector();
+        if dot(on_unit_sphere, normal) > 0.0 {
+            on_unit_sphere
+        } else {
+            -on_unit_sphere
+        }
     }
 }
 
