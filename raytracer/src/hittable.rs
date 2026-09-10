@@ -2,24 +2,27 @@
 
 use crate::{
     interval::Interval,
+    material::Material,
     ray::Ray,
     vec3::{Point3, Vec3, dot},
 };
 
-pub struct HitRecord {
+pub struct HitRecord<'a> {
     pub t: f64,
     pub p: Point3,
     pub normal: Vec3,
     pub front_face: bool,
+    pub mat: &'a dyn Material, //Borrow to any material (metal, glass, etc..)
 }
 
-impl HitRecord {
-    pub fn new(t: f64, p: Point3, normal: Vec3) -> HitRecord {
+impl<'a> HitRecord<'a> {
+    pub fn new(t: f64, p: Point3, normal: Vec3, mat: &'a dyn Material) -> HitRecord<'a> {
         HitRecord {
             t,
             p,
             normal,
             front_face: true,
+            mat,
         }
     }
     pub fn set_face_normal(&mut self, r: &Ray) {
