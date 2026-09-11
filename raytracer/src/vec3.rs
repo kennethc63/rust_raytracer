@@ -6,7 +6,7 @@ use std::ops::{Add, Div, Mul, Neg, Sub};
 use crate::util::{random_f64, random_f64_range};
 
 //Allow printing and cloning, Clone enables explicit .clone(), Copy = implicit copying when needed
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy, Default)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -55,7 +55,7 @@ impl Vec3 {
     }
     pub fn random_on_hemisphere(normal: Vec3) -> Vec3 {
         let on_unit_sphere = Vec3::random_unit_vector();
-        if dot(on_unit_sphere, normal) > 0.0 {
+        if Vec3::dot(on_unit_sphere, normal) > 0.0 {
             on_unit_sphere
         } else {
             -on_unit_sphere
@@ -63,19 +63,26 @@ impl Vec3 {
     }
 
     pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
-        v - 2.0 * dot(v, n) * n
+        v - 2.0 * Vec3::dot(v, n) * n
     }
 
     pub fn refract(uv: Vec3, n: Vec3, etai_over_etat: f64) -> Vec3 {
-        let cos_theta = dot(-uv, n).min(1.0);
+        let cos_theta = Vec3::dot(-uv, n).min(1.0);
         let r_out_perp: Vec3 = etai_over_etat * (uv + cos_theta * n);
         let r_out_parallel: Vec3 = -(((1.0 - r_out_perp.length_squared()).abs()).sqrt()) * n;
         r_out_perp + r_out_parallel
     }
-}
 
-pub fn dot(a: Vec3, b: Vec3) -> f64 {
-    a.x * b.x + a.y * b.y + a.z * b.z
+    pub fn cross(u: Vec3, v: Vec3) -> Vec3 {
+        Vec3::new(
+            u.y * v.z - u.z * v.y,
+            u.z * v.x - u.x * v.z,
+            u.x * v.y - u.y * v.x,
+        )
+    }
+    pub fn dot(a: Vec3, b: Vec3) -> f64 {
+        a.x * b.x + a.y * b.y + a.z * b.z
+    }
 }
 
 impl Add for Vec3 {

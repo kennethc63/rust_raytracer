@@ -1,12 +1,6 @@
 //material.rs
 
-use crate::{
-    colour::Colour,
-    hittable::HitRecord,
-    ray::Ray,
-    util::random_f64,
-    vec3::{Vec3, dot},
-};
+use crate::{colour::Colour, hittable::HitRecord, ray::Ray, util::random_f64, vec3::Vec3};
 pub trait Material {
     fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<(Colour, Ray)>;
 }
@@ -53,7 +47,7 @@ impl Material for Metal {
         reflected = reflected.unit_vector() + (self.fuzz * Vec3::random_unit_vector());
         let scattered = Ray::new(rec.p, reflected);
         let attenuation = self.albedo;
-        if dot(scattered.direction, rec.normal) > 0.0 {
+        if Vec3::dot(scattered.direction, rec.normal) > 0.0 {
             Some((attenuation, scattered))
         } else {
             None
@@ -87,7 +81,7 @@ impl Material for Dielectric {
 
         let unit_direction: Vec3 = r_in.direction.unit_vector();
 
-        let cos_theta: f64 = dot(-unit_direction, rec.normal).min(1.0);
+        let cos_theta: f64 = Vec3::dot(-unit_direction, rec.normal).min(1.0);
         let sin_theta: f64 = (1.0 - cos_theta * cos_theta).sqrt();
 
         let cannot_refract: bool = ri * sin_theta > 1.0;

@@ -4,7 +4,7 @@ use crate::{
     interval::Interval,
     material::Material,
     ray::Ray,
-    vec3::{Point3, Vec3, dot},
+    vec3::{Point3, Vec3},
 };
 
 pub struct HitRecord<'a> {
@@ -26,7 +26,7 @@ impl<'a> HitRecord<'a> {
         }
     }
     pub fn set_face_normal(&mut self, r: &Ray) {
-        self.front_face = dot(r.direction, self.normal) < 0.0;
+        self.front_face = Vec3::dot(r.direction, self.normal) < 0.0;
         if !self.front_face {
             self.normal = -self.normal;
         }
