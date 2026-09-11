@@ -4,7 +4,11 @@ use std::{
     ops::{Add, AddAssign, Mul},
 };
 
-use crate::{interval::Interval, vec3::Vec3};
+use crate::{
+    interval::Interval,
+    util::{random_f64, random_f64_range},
+    vec3::Vec3,
+};
 
 #[derive(Clone, Copy)]
 pub struct Colour {
@@ -16,6 +20,16 @@ pub struct Colour {
 impl Colour {
     pub fn new(r: f64, g: f64, b: f64) -> Colour {
         Colour { r, g, b }
+    }
+    pub fn random() -> Colour {
+        Colour::new(random_f64(), random_f64(), random_f64())
+    }
+    pub fn random_range(min: f64, max: f64) -> Colour {
+        Colour::new(
+            random_f64_range(min, max),
+            random_f64_range(min, max),
+            random_f64_range(min, max),
+        )
     }
 }
 
