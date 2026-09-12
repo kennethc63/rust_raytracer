@@ -98,7 +98,8 @@ fn main() {
                     //diffuse
                     let albedo = Colour::random() * Colour::random();
                     let sphere_material = Lambertian::new(albedo);
-                    world.add(Sphere::new(centre, 0.2, sphere_material));
+                    let centre2 = centre + Vec3::new(0.0, random_f64_range(0.0, 0.5), 0.0);
+                    world.add(Sphere::new_moving(centre, centre2, 0.2, sphere_material));
                 } else if choose_mat < 0.95 {
                     // metal
                     let albedo = Colour::random_range(0.5, 1.0);
@@ -126,8 +127,8 @@ fn main() {
     let mut cam = Camera::new();
 
     cam.aspect_ratio = 16.0 / 9.0;
-    cam.image_width = 1200;
-    cam.samples_per_pixel = 500;
+    cam.image_width = 400;
+    cam.samples_per_pixel = 100;
     cam.max_depth = 50;
 
     cam.vfov = 20.0;
